@@ -3,6 +3,9 @@
 const mongoose = require('mongoose');
 var Wines = mongoose.model('Wines');
 var Foods = mongoose.model('Foods');
+var Beers = mongoose.model('Beers');
+
+// Wine Controller
 
 exports.list_wines = (req, res) => { 
 	Wines.find({}, function(err, wine) { 
@@ -93,6 +96,16 @@ exports.edit_wine_by_name = (req, res) => {
 	});
 };
 
+exports.update_wine = (req, res) => { 
+	Wines.findOneAndUpdate({_id: reqs.params.wineId}, req.body, { new : true }, (err, wine) => { 
+		if(err) { 
+			console.error('Problem encountered... ' + err);
+			res.send(err);
+		}
+		res.json(wine);
+	});
+};
+
 exports.delete_wine_by_ID = (req, res) => { 
 	Wines.remove({ 
 		"_id" : req.params.wineId
@@ -106,6 +119,8 @@ exports.delete_wine_by_ID = (req, res) => {
 	});
 };
 
+
+// Food Controller
 // food exports
 
 exports.list_foods = (req, res) => {
@@ -141,16 +156,6 @@ exports.get_food = (req, res) => {
 	});
 };
 
-exports.update_wine = (req, res) => { 
-	Wines.findOneAndUpdate({_id: reqs.params.wineId}, req.body, { new : true }, (err, wine) => { 
-		if(err) { 
-			console.error('Problem encountered... ' + err);
-			res.send(err);
-		}
-		res.json(wine);
-	});
-};
-
 exports.update_food = (req, res) => {
 	Foods.findOneAndUpdate({_id: req.params.foodId}, req.body, { new: true }, (err, food) => {
 		if(err) { 
@@ -168,5 +173,64 @@ exports.delete_food = (req, res) => {
 			res.send(err);
 		}
 		res.json(food);
+	});
+};
+
+// Beers & Beer Controller
+
+exports.list_beers = (req, res) => { 
+	Beers.find({}, (err, beer) => { 
+		if(err) { 
+			console.error("Problem encounterd..." + err);
+			res.send(err);
+		}
+		res.json(beer);
+	});
+};
+
+exports.create_beer = (req, res) => { 
+	var new_beer = new Beers(req.body);
+	new_beer.save(function(err, beer) { 
+		if(err)
+		{
+
+			console.error('Problem encountered... ' + err);
+			res.send(err);
+		}
+		console.dir(req.body);
+		res.json(beer);
+	});
+};
+
+exports.get_beer = (req, res) => {
+	Beers.findById({_id: req.params.beerId}, (err, beer) => {
+		if(err) {
+			console.error("Problem encountered... " + err);
+			res.send(err);
+		}
+		res.json(beer);
+
+	});
+};
+
+exports.update_beer = (req, res) => { 
+	Beers.findOneAndUpdate({_id: req.params.beerId}, req.body, (err, beer) => { 
+		if(err) { 
+			console.error("Problem encountered... " + err)
+			res.send(err);
+		}
+		console.dir(beer);
+		res.json(beer);
+	});
+};
+
+exports.delete_beer = (req, res) => { 
+	Beers.remove({_id: req.params.beerId}, (err, beer) => { 
+		if(err) { 
+			console.error("Problem encountered..." + err)
+			res.send(err);
+		}
+		console.dir(beer);
+		res.json(beer);
 	});
 };

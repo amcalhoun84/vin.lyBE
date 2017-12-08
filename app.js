@@ -7,7 +7,7 @@ const express = require('express'),
 	app = express(),
 	port = normalizePort(process.env.PORT || '3000'),
 	mongoose = require('mongoose'),
-	Wines = require('./api/model/schema'),
+	//schemas = require('./api/model/schema'),
 	bodyParser = require('body-parser'),
 	sha256 = require('sha256'),
 	cors = require('cors'),
@@ -74,3 +74,5 @@ function onListening() {
 	var bind = typeof addr == 'string' ? 'pipe' + addr : 'port' + addr.port;
 	debug('Listening on ' + bind);
 };
+
+module.exports = app;
