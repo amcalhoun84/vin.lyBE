@@ -4,8 +4,8 @@ module.exports = (app) => {
 	// Eventually I will break this up into three controllers to be easier to use.
 	const wineCtrl = require('../controllers/wineController.js'),
 		foodCtrl = require('../controllers/foodController.js'),
-		beerCtrl = require('../controllers/beerController.js');
-	//	userCtrl = require('../controllers/userController.js');
+		beerCtrl = require('../controllers/beerController.js'),
+		userCtrl = require('../controllers/userController.js');
 
 	app.route('/api/wines')
 		.get(wineCtrl.list_wines)
@@ -62,5 +62,20 @@ module.exports = (app) => {
 		.get(beerCtrl.get_beer_by_name)
 		.put(beerCtrl.update_beer_by_name)
 		.delete(beerCtrl.delete_beer_by_name);
+
+	app.route('/api/users')
+		.get(userCtrl.list_users)
+		.post(userCtrl.create_user);
+
+	app.route('/api/users/:userName')
+		.get(userCtrl.get_user_by_userName);
+
+	app.route('/api/users/login')
+		.post(userCtrl.get_user_by_userName_and_password);
+
+	app.route('/api/users/apocalypse')
+		.delete(userCtrl.user_wipe);		
 };
+
+
 

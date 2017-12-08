@@ -79,7 +79,7 @@ exports.update_food_by_ID = (req, res) => {
 			console.error('Problem encountered... ' + err);
 			res.send(err);
 		}
-		res.json(wine);
+		res.json(food);
 	});
 };
 
@@ -89,7 +89,7 @@ exports.update_food_by_name = (req, res) => {
 			console.error('Problem encountered... ' + err);
 			res.send(err);
 		}
-		res.json(wine);
+		res.json(food);
 	});
 };
 
