@@ -4,15 +4,16 @@ const mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 	var BeerSchema = new Schema({ 
-	name: {
+	_id: {
 		type: String,
-		required: 'Please give a name.',
+		required: 'Please give an identifiable name.',
 		unique: true
 	},
-	country: {
+
+	/*country: {
 		type: String,
 		required: 'Please give us the country, region, or state of origin.'
-	},
+	},*/
 	beer_type: { 
 		type: String,
 		enum: ['Ale',
@@ -56,6 +57,7 @@ const mongoose = require('mongoose'),
 				'Trappist',
 				'Dortmunder',
 				'Rye Beer',
+				'Rauchbier',
 				'Quadrupel',
 				'Kreik',
 				'Guard Beer',
@@ -69,13 +71,51 @@ const mongoose = require('mongoose'),
 			required: "Please specify a type of beer. Thank you."
 			//default: 'Lager'
 	},
+/*	notes: { 
+		type: [String],
+		enum: ['Roasted', 
+				'Bready', 
+				'Bitter', 
+				'Sweet', 
+				'Spicy',
+				'Caramel',
+				'Butterscotch',
+				'Hoppy',
+				'Skunky',
+				'Toffee',
+				'Coffee',
+				'Malty',
+				'Tart',
+				'Subtle',
+				'Woody',
+				'Earthy',
+				'Sulfuric']
+	},
+	intensity: { 
+		type: [String],
+		enum: ['Assertive',
+				'Bold',
+				 'Balanced',
+				 'Robust',
+				 'Smooth',
+				 'Metallic',
+				 'Harsh',
+				 'Complex',
+				 'Refined',
+				 'Smooth',
+				 'Mild',
+				 'Hearty',
+				 'Intense']
+	},*/
 
-	description: { 
+/*	description: { 
 		type: String,
 		required: "Sounds delicious, but you need to describe it a bit!" 
-	}
+	},*/
 
-	// Pairs with -- food ID
+		pairs_with_food: { 
+		type: [String]
+	}
 });
 
 

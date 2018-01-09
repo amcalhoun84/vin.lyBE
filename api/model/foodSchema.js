@@ -3,27 +3,65 @@ const mongoose = require('mongoose'),
 
 var FoodSchema = new Schema({
 	_id: { 
-		type: String
-		//required: "You need to tell us the name / type of food!"
+		type: String,
+		required: "You need to tell us the name / type of food!",
+		unique: true
 	},
-	name: {
+/*	name: {
 		type: String
-	},
+	},*/
 	primary_group: {
 		type: String,
-		enum: ['Protein', 
-		'Starch', 
+		enum: ['Meat',
+		'Dairy', 
 		'Vegetable', 
 		'Fruit', 
+		'Starch',
 		'Sweets']
+	},
+	name: { 
+		type: String
 	},
 	food_type: { 
 		type: String,
-		enum: ['Savory', 
-		'Sweet', 
-		'Fruit', 
+		enum: ['Red Meat',
+		'Pork',
+		'Cured Meat',
+		'Egg',
+		'Poultry',
+		'Game',
+		'White Pasta',
+		'Red Pasta',
+		'White Fish',
+		'Dark Fish',
+		'Shellfish',
+		'Mollusk',
+		'Tropical Fruit',
+		'Citrus',
+		'Stone Fruit',
+		'Fruit',
 		'Crudite', 
-		'Cheese']
+		'Hard Cheese', 
+		'Pungent Cheese',
+		'Soft Cheese',
+		'Tuber',
+		'Sweet Starch',
+		'Mushroom',
+		'Legumes',
+		'Sushi',
+		'Spicy',
+		'Sweet',
+		'Chocolate',
+		'Baking Spice'
+		]
+	},
+
+	pairs_with_wine: {
+		type: [String]
+	},
+
+	pairs_with_beer: { 
+		type: [String]
 	}
 
 

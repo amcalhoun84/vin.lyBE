@@ -34,7 +34,7 @@ exports.create_wine = (req, res) => {
 
 
 exports.get_wine_by_ID = (req, res) => { 
-	Wines.findById(req.params.wineId, (err, wine) => { 
+	Wines.findById({"_id" : { "regex" : req.params.wineId, "$options" : "i" } }, (err, wine) => { 
 		if(err) { 
 			console.error('Problem encountered... ' + err);
 			res.send(err);
@@ -45,7 +45,7 @@ exports.get_wine_by_ID = (req, res) => {
 
 exports.get_wine_by_name = (req, res) => { 
 	console.log("Finding wine(s) by name: " + req.params.wineName);
-	Wines.find({"name" : { "$regex" : req.params.wineName, "$options" : "i"} }, (err, wine) => { 
+	Wines.find({"wine_varietal" : { "$regex" : req.params.wineName, "$options" : "i"} }, (err, wine) => { 
 		if(err) { 
 			console.error('Problem encountered...' + err);
 			res.send(err);
@@ -138,4 +138,17 @@ exports.delete_wine_by_name = (req, res) => {
 		res.json({ message: 'Wine successfully deleted.' });
 
 	});
+};
+
+exports.wine_wipe = (req, res) => { 
+	Wines.remove({}, function(err, wine) { 
+		if(err) res.send(err)
+		res.json(wine);
+	});
+};
+
+// pairing functions
+
+exports.wine_pairs_food = (req, res) => {
+	Wines.find({});
 };

@@ -7,7 +7,12 @@ const mongoose = require('mongoose'),
 // Wine Schema
 
 var WineSchema = new Schema({
-	name: { 
+	_id: {
+		type: String,
+		required: "We need a name or id of some sort.",
+		unique: true
+	},
+/*	name: { 
 		type: String,
 		required: "Please give me a name for the wine."
 	},
@@ -20,8 +25,8 @@ var WineSchema = new Schema({
 		type: String,
 		required: "Please give me a year for the wine.",
 		default: '2015'
-	},
-	wine_type: { 
+	},*/
+	wine_varietal: { 
 		type: String,
 		enum: ['Riesling', 
 				'Champagne', 
@@ -41,7 +46,8 @@ var WineSchema = new Schema({
 				'Bordeaux', 
 				'Cabernet Franc', 
 				'Syrah', 
-				'Shiraz', 
+				'Shiraz',
+				'Petit Syrah',
 				'Merlot', 
 				'Pinot Noir', 
 				'Cabernet Sauvignon', 
@@ -50,6 +56,7 @@ var WineSchema = new Schema({
 				'Port', 
 				'Sweet Red', 
 				'Sweet White', 
+				'Semilion',
 				'Mead', 
 				'Rose',
 				'Sangiovese', 
@@ -59,7 +66,20 @@ var WineSchema = new Schema({
 				'Viognier'],
 		required: "Please give me the varietal of the wine.",
 		// default: 'Chardonnay'
-	}, 
+	},
+	wine_type: {
+		type: String,
+		enum: ['Bold Red',
+			'Medium Red',
+			'Light Red',
+			'Rose',
+			'Rich White',
+			'Light White',
+			'Sparkling',
+			'Sweet White',
+			'Dessert'		
+		]
+	},
 	body: {
 		type: String,
 		enum: ['Bone Dry',
@@ -75,7 +95,9 @@ var WineSchema = new Schema({
 	// One thing many people don't know is that the aroma and bouquet of a wine are two very different entities. The aroma is the PRIMARY flavor. It is also the most general. A Bouquet will be a bit more specific and apply to a more particular flavor profile.
 	// It comes from the grape variety. The Bouquet comes from the cask. 
 
-	aroma: {
+	// These can be added back later when the App has a bit more traction. Right now we got to focus on the MVP
+
+/*	aroma: {
 		type: [String],
 		enum: ['Peach',
 		'Blackberry',
@@ -115,9 +137,11 @@ var WineSchema = new Schema({
 		'Mineral',
 		'Spice',
 		'Yeast']
+	},
+*/
+	pairs_with_food: { 
+		type: [String]
 	}
-
-	// Pairs with, food_ID
 
 });
 

@@ -67,21 +67,11 @@ exports.get_user_by_userName_and_password = (req, res) => {
 
 // DO NOT USE THIS
 
-exports.user_wipe = (req, res) => { 
-	Users.remove({}, (err, user) => {
-		if(err)
-		{
-			console.log("Yea, something bad happened... and if you are using this functionality, it's probably better that it did. --- " + err)
-			res.send(err);
-		}
-		res.json(err);
+exports.user_wipe = (done) => { 
+	Foods.remove({}, function(err) { 
+		done();
 	});
-
-
-}
-
-
-
+};
 
 function generateHash(password, seed) { 
 	var prehash = password + seed,

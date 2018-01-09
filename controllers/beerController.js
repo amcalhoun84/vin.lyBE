@@ -13,7 +13,7 @@ exports.list_beers = (req, res) => {
 
 exports.create_beer = (req, res) => { 
 	var new_beer = new Beers(req.body);
-	new_beer.save(function(err, beer) { 
+	new_beer.save((err, beer) => { 
 		if(err)
 		{
 
@@ -28,7 +28,7 @@ exports.create_beer = (req, res) => {
 exports.get_beer_by_ID = (req, res) => {
 	Beers.findById({_id: req.params.beerId}, (err, beer) => {
 		if(err) {
-			console.error("Problem encountered... " + err);
+			console.error("Problem encountered... \n" + err);
 			res.send(err);
 		}
 		res.json(beer);
@@ -37,7 +37,7 @@ exports.get_beer_by_ID = (req, res) => {
 };
 
 exports.get_beer_by_name = (req, res) => {
-	Beers.findById({name: { "regex" : req.params.beerId, "$options" : "i"} }, (err, beer) => {
+	Beers.findById({name: { "regex" : req.params.beerName, "$options" : "i"} }, (err, beer) => {
 		if(err) {
 			console.error("Problem encountered... " + err);
 			res.send(err);
@@ -75,7 +75,7 @@ exports.update_beer_by_name = (req, res) => {
 exports.delete_beer_by_ID = (req, res) => { 
 	Beers.remove({_id: req.params.beerId}, (err, beer) => { 
 		if(err) { 
-			console.error("Problem encountered..." + err)
+			console.error("Problem encountered... " + err)
 			res.send(err);
 		}
 		console.dir(beer);
@@ -86,10 +86,20 @@ exports.delete_beer_by_ID = (req, res) => {
 exports.delete_beer_by_name = (req, res) => { 
 	Beers.remove({_id: req.params.beerName}, (err, beer) => { 
 		if(err) { 
-			console.error("Problem encountered..." + err)
+			console.error("Problem encountered... " + err)
 			res.send(err);
 		}
 		console.dir(beer);
+		res.json(beer);
+	});
+};
+
+exports.beer_wipe = (req, res) => { 
+	Beers.remove({}, function(err, beer) { 
+		if(err) { 
+			console.error("Problem encountered... " + err);
+			res.send(err);
+		}
 		res.json(beer);
 	});
 };
