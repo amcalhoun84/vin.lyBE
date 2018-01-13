@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose'),
 	// Wines = mongoose.model('Wines');
-	Wines = require('../api/model/wineSchema');
+	Wines = require('../api/model/wineSchema'),
+	Foods = require('../api/model/foodSchema');
 
 
 // Wine Controller
@@ -150,5 +151,23 @@ exports.wine_wipe = (req, res) => {
 // pairing functions
 
 exports.wine_pairs_food = (req, res) => {
-	Wines.find({});
+	Wines.findOne({"_id" : req.params.wineType }, (err, wine) => { 
+		if(err) res.send(err);
+		if(wine) { 
+			Foods.find({}, (err, food) => { 
+				//console.log("Food: " + food[0]);
+				for(let i=0; i<food.length; i++)
+				{
+					if(food[i].pairs_with_wine.includes(req.params.wineType)) 
+					{
+						console.log("Match found: " + food[i].name + "\n");
+					}	
+				}
+
+				res.send(food);
+			})
+
+		}
+
+	});
 };

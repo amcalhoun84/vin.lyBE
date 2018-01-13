@@ -1,5 +1,6 @@
 const mongoose = require('mongoose'),
-	Beers = require('../api/model/beerSchema');
+	Beers = require('../api/model/beerSchema'),
+	Foods = require('../api/model/foodSchema');
 
 exports.list_beers = (req, res) => { 
 	Beers.find({}, (err, beer) => { 
@@ -51,8 +52,10 @@ exports.get_beer_by_name = (req, res) => {
 // Most of these are going to be dev-based functions.
 
 exports.update_beer_by_ID = (req, res) => { 
-	Beers.findOneAndUpdate({_id: req.params.beerId}, req.body, (err, beer) => { 
+	Beers.findOneAndUpdate({_id: req.params.beerId}, req.body, { new: true }, (err, beer) => { 
+		
 		if(err) { 
+			console.dir(req.body);
 			console.error("Problem encountered... " + err)
 			res.send(err);
 		}
@@ -62,7 +65,7 @@ exports.update_beer_by_ID = (req, res) => {
 };
 
 exports.update_beer_by_name = (req, res) => { 
-	Beers.findOneAndUpdate({name: req.params.beerName}, req.body, (err, beer) => { 
+	Beers.findOneAndUpdate({name: req.params.beerName}, req.body, { new: true }, (err, beer) => { 
 		if(err) { 
 			console.error("Problem encountered... " + err)
 			res.send(err);
@@ -101,5 +104,27 @@ exports.beer_wipe = (req, res) => {
 			res.send(err);
 		}
 		res.json(beer);
+	});
+};
+
+exports.beer_pairs_food = (req, res) => {
+	Beers.findOne({"_id" : req.params.beerType }, (err, beer) => { 
+		if(err) res.send(err);
+		if(beer) { 
+			Foods.find({}, (err, food) => { 
+				//console.log("Food: " + food[0]);
+				for(let i=0; i<food.length; i++)
+				{
+					if(food[i].pairs_with_beer.includes(req.params.beerType)) 
+					{
+						console.log("Match found: " + food[i].name + "\n");
+					}	
+				}
+
+				res.send(food);
+			})
+
+		}
+
 	});
 };
