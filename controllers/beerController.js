@@ -97,6 +97,31 @@ exports.delete_beer_by_name = (req, res) => {
 	});
 };
 
+exports.beer_pairs_food = (req, res) => {
+	Beers.findOne({"_id" : req.params.beerType }, (err, beer) => { 
+		if(err) res.send(err);
+		if(beer) { 
+			Foods.find({}, (err, food) => { 
+				//console.log("Food: " + food[0]);
+				let foodArray = new Array()
+				for(let i=0; i<food.length; i++)
+				{
+					if(food[i].pairs_with_beer.includes(req.params.beerType)) 
+					{
+						console.log("Match found: " + food[i].name + "\n");
+						foodArray.push(food[i].name);
+					}	
+				}
+
+				res.send(foodArray);
+			})
+
+		}
+
+	});
+};
+
+
 exports.beer_wipe = (req, res) => { 
 	Beers.remove({}, function(err, beer) { 
 		if(err) { 
@@ -104,27 +129,5 @@ exports.beer_wipe = (req, res) => {
 			res.send(err);
 		}
 		res.json(beer);
-	});
-};
-
-exports.beer_pairs_food = (req, res) => {
-	Beers.findOne({"_id" : req.params.beerType }, (err, beer) => { 
-		if(err) res.send(err);
-		if(beer) { 
-			Foods.find({}, (err, food) => { 
-				//console.log("Food: " + food[0]);
-				for(let i=0; i<food.length; i++)
-				{
-					if(food[i].pairs_with_beer.includes(req.params.beerType)) 
-					{
-						console.log("Match found: " + food[i].name + "\n");
-					}	
-				}
-
-				res.send(food);
-			})
-
-		}
-
 	});
 };

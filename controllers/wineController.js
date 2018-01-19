@@ -155,16 +155,19 @@ exports.wine_pairs_food = (req, res) => {
 		if(err) res.send(err);
 		if(wine) { 
 			Foods.find({}, (err, food) => { 
+				let foodArray = new Array();
+
 				//console.log("Food: " + food[0]);
 				for(let i=0; i<food.length; i++)
 				{
 					if(food[i].pairs_with_wine.includes(req.params.wineType)) 
 					{
 						console.log("Match found: " + food[i].name + "\n");
+						foodArray.push(food[i].name);
 					}	
 				}
 
-				res.send(food);
+				res.send(foodArray);
 			})
 
 		}
