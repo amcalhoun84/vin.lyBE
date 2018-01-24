@@ -124,7 +124,7 @@ exports.food_wipe = (req, res) => {
 };
 
 
-exports.get_food_wine_pairing_by_varietal = (req, res) => { 
+/*exports.get_food_wine_pairing_by_varietal = (req, res) => { 
 	Foods.findOne({ "food_type" : req.params.foodType }, (err, food) => { 
 		if(err) { 
 			console.error('Problem encountered...' + err);
@@ -144,7 +144,7 @@ exports.get_food_wine_pairing_by_varietal = (req, res) => {
 			});
 		};
 	});
-};
+};*/
 
 /*exports.get_food_beer_pairing_by_type = (req, res) => { 
 	var matchArray = new Array();
@@ -200,7 +200,33 @@ exports.get_food_beer_pairing_by_type = (req, res) => {
 					res.send(matchArray);
 				});
 			}						
-		
-		//res.send(matchArray);
+	});
+};
+
+exports.get_food_wine_pairing_by_type = (req, res) => { 
+	var matchArray = new Array();
+
+	Foods.findOne({ "food_type" : req.params.foodType }, (err, food) => { 
+		if(err) { 
+			console.error('Problem encountered...' + err);
+			res.send(err);
+		}
+		if(food) { 
+				//console.log("_id: " + food.pairs_with_beer[i]);
+				Wines.find({"_id" : food.pairs_with_wine }, (err, wine) => 
+				{
+					if(err) { 
+						console.error('Problem encountered...' + err);
+						res.send(err);
+					}								
+					if(wine) 
+					for(let i=0; i < wine.length; i++) 
+					{
+						// matchArray.push(wine[i]._id);
+						matchArray.push(wine[i].wine_varietal);
+					}
+					res.send(matchArray);
+				});
+			}						
 	});
 };

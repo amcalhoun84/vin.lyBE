@@ -34,6 +34,24 @@ module.exports = (app) => {
 
 */
 
+// Beer API Endpoints
+	app.route('/api/beers')
+		.get(beerCtrl.list_beers)
+		.post(beerCtrl.create_beer);
+
+	app.route('/api/beers/:beerId')
+		.get(beerCtrl.get_beer_by_ID)
+		.patch(beerCtrl.update_beer_by_ID)
+		.delete(beerCtrl.delete_beer_by_ID);
+
+	app.route('/api/beers/name/:beerName')
+		.get(beerCtrl.get_beer_by_name)
+		.patch(beerCtrl.update_beer_by_name)
+		.delete(beerCtrl.delete_beer_by_name);
+
+	app.route('/api/beerMatch/food/:beerType')
+		.get(beerCtrl.beer_pairs_food);
+
 // Food API hooks
 
 	app.route('/api/foods')
@@ -57,30 +75,11 @@ module.exports = (app) => {
 		.get(foodCtrl.get_food_by_type);
 
 	app.route('/api/foodMatch/wine/:foodType/')
-		.get(foodCtrl.get_food_wine_pairing_by_varietal);
+		.get(foodCtrl.get_food_wine_pairing_by_type);
 
 	app.route('/api/foodMatch/beer/:foodType/')
 		.get(foodCtrl.get_food_beer_pairing_by_type);
 
-
-
-// Beer API Endpoints
-	app.route('/api/beers')
-		.get(beerCtrl.list_beers)
-		.post(beerCtrl.create_beer);
-
-	app.route('/api/beers/:beerId')
-		.get(beerCtrl.get_beer_by_ID)
-		.patch(beerCtrl.update_beer_by_ID)
-		.delete(beerCtrl.delete_beer_by_ID);
-
-	app.route('/api/beers/name/:beerName')
-		.get(beerCtrl.get_beer_by_name)
-		.patch(beerCtrl.update_beer_by_name)
-		.delete(beerCtrl.delete_beer_by_name);
-
-	app.route('/api/beerMatch/food/:beerType')
-		.get(beerCtrl.beer_pairs_food);
 
 
 // For when we have actual users. Pre-emptive building.
