@@ -1,7 +1,6 @@
 'use strict'
 
 module.exports = (app) => { 
-	// Eventually I will break this up into three controllers to be easier to use.
 	const wineCtrl = require('../controllers/wineController.js'),
 		foodCtrl = require('../controllers/foodController.js'),
 		beerCtrl = require('../controllers/beerController.js'),
